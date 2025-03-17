@@ -1,15 +1,14 @@
 "use server";
 
+import { signIn, signOut } from "@/auth";
+
+type SocialLoginAction = "github";
+
 export async function doSocialLogin(formData: FormData) {
   const action = formData.get("action");
+  await signIn(action as SocialLoginAction, { redirectTo: "/home" });
+}
 
-  switch (action) {
-    case "google":
-      console.log("sign in with google");
-      break;
-
-    case "github":
-      console.log("sign in with github");
-      break;
-  }
+export async function doLogout() {
+  await signOut({ redirectTo: "/" });
 }
